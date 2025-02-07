@@ -20,7 +20,7 @@ public class foreach {
 
 class Utils{
     public static void myMethod(int a) {
-        a = a*2;
+        a = a*10;
         System.out.println(a);
     }
 }

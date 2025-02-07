@@ -8,14 +8,15 @@ import java.util.stream.Collectors;
 
 public class Map {
     public static void main(String[] args) {
-        ArrayList<String> list1 = new ArrayList<>();
+        ArrayList<Object> list1 = new ArrayList<>();
         list1.add("qwerty");
         list1.add("qwertyqwerty");
         list1.add("qwertyqwertyqwerty");
         list1.add("qwertyqwertyqwertyqw");
+        list1.add(5);
 
 
-        List<Integer> list2 = list1.stream().map(elem -> elem.length()).collect(Collectors.toList());
+        List<Class<?>> list2 = list1.stream().map(elem -> elem.getClass()).collect(Collectors.toList());
         System.out.println(list2);
 
         Set<String> set1 = new TreeSet<>();

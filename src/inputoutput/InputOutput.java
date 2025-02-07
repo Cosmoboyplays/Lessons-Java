@@ -1,5 +1,6 @@
+package inputoutput;
+
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -13,7 +14,7 @@ public class InputOutput {
 //            while ((b = fis.read()) != -1){
 //                System.out.println((char)b);
 //            }
-            InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
+            isr = new InputStreamReader(fis, "UTF-8");
             while ((b = isr.read()) != -1){
                 System.out.println(b);
             }
@@ -31,8 +32,6 @@ public class InputOutput {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
         }
-
     }
 }

@@ -1,16 +1,13 @@
 import java.util.ArrayList;
 
-public class StudentInfo {
-      void testStudents(ArrayList<Student> Al, StudentChecks sc){
-          for (Student s: Al){
-              if (sc.check(s)){
-                  System.out.println(s);
-              }
-          }
-
-
-
-      }
+//public class StudentInfo {
+//      void testStudents(ArrayList<Student> Al, StudentChecks sc){
+//          for (Student s: Al){
+//              if (sc.check(s)){
+//                  System.out.println(s);
+//              }
+//          }
+//      }
 //        void goodstudetsOvergrade(ArrayList<Student> Al, int age){
 //        for (Student s : Al) {
 //            if (s.age>age){
@@ -19,7 +16,7 @@ public class StudentInfo {
 //        }
 //    }
 
-}
+
 class Test{
     public static void main(String[] args) {
         Student st1 = new Student("Pasha", 3, 20);
@@ -34,11 +31,17 @@ class Test{
 
         System.out.println(Al);
 
-        StudentInfo info = new StudentInfo();
+//        StudentInfo info = new StudentInfo();
 //        info.goodstudetsOvergrade(Al, 25);
-        info.testStudents(Al, (Student s) -> {return s.age>25;});
+        testStudents(Al, (Student s) -> {return s.age>25;});
 
-
+    }
+    static void testStudents(ArrayList<Student> Al, StudentChecks sc) {
+        for (Student s : Al) {
+            if (sc.check(s)) {
+                System.out.println(s);
+            }
+        }
     }
 }
 
