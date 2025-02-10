@@ -8,6 +8,7 @@ import java.util.concurrent.Future;
 
 public class Ex1 {
     public static void main(String[] args) {
+        // 1 ПОТОК
         MyThreadMain mtm = new MyThreadMain();
         long startTime = System.currentTimeMillis();
         mtm.run();
@@ -19,25 +20,29 @@ public class Ex1 {
             throw new RuntimeException(e);
         }
 
+
+        // 4 ПОТОКА
         long startTime2 = System.currentTimeMillis();
-        ExecutorService executor = Executors.newFixedThreadPool(4);
+        ExecutorService executor = Executors.newFixedThreadPool(4); // возбудитель
 
         // Создаем задачи
-        Future<Integer> future1 = executor.submit(new MyThread1());
-        Future<Integer> future2 = executor.submit(new MyThread2());
-        Future<Integer> future3 = executor.submit(new MyThread3());
-        Future<Integer> future4 = executor.submit(new MyThread4());
+        Future<Long> future1 = executor.submit(new MyThread1());
+        Future<Long> future2 = executor.submit(new MyThread2());
+        Future<Long> future3 = executor.submit(new MyThread3());
+        Future<Long> future4 = executor.submit(new MyThread4());
+        Future<Long> future5 = executor.submit(new MyThread5());
 
         // Получаем результаты
         try {
-            int result1 = future1.get();
-            int result2 = future2.get();
-            int result3 = future3.get();
-            int result4 = future4.get();
+            long result1 = future1.get();
+            long result2 = future2.get();
+            long result3 = future3.get();
+            long result4 = future4.get();
+            long result5 = future5.get();
             long endTime2 = System.currentTimeMillis();
 
             System.out.println(timemtm);
-            System.out.println("Результаты потоков: " + (result1+result2+result3+result4));
+            System.out.println("Результат 4 потоков: " + (result1+result2+result3+result4));
             System.out.println("Время выполнения в 4 потоках в миллисекундах: " + (endTime2 - startTime2));
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
@@ -47,95 +52,116 @@ public class Ex1 {
     }
 }
 
-
+// это 1 поток
 class MyThreadMain extends Thread{
     public void run() {
         sum();
     }
     private void sum(){
-        int result = 0;
-        for (int i=1; i<10000000; i++){ // 115-125
+        long result = 0;
+        long z = 0;
+        for (long i=1; i<1_000_000_000; i++){ // 115-125
             //System.out.println(i);
-            result += i;
+            z = (long) Math.sqrt(i * i);
+            result += z;
         }
-        //System.out.println(result);
+        System.out.println("Результат одного потока "+result);
     }
 }
 
-
-class MyThread1 implements Callable<Integer>{
-    private Integer sum(){
-        int result1 = 0;
-        for (int i=1; i<2500000; i++){
-            //System.out.println(i);
-            result1 += i;
+// 4 потока
+class
+MyThread1 implements Callable<Long> {
+    private long sum(){
+        long result1 = 0;
+        long z = 0;
+        for (long i=1; i<250_000_000; i++){
+            z = (long) Math.sqrt(i * i);
+            result1 += z;
         }
-       // System.out.println(result1);
         return result1;
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Long call() {
         return sum();
     }
 }
 
 
-class MyThread2 implements Callable<Integer>{
+class MyThread2 implements Callable<Long>{
 
-    private Integer sum(){
-        int result2 = 0;
-        for (int i=2500000; i<5000000; i++){
-            //System.out.println(i);
-            result2 += i;
+    private long sum(){
+        long result2 = 0;
+        long z = 0;
+        for (long i=250_000_000; i<500_000_000; i++){
+            z = (long) Math.sqrt(i * i);
+            result2 += z;
         }
-       // System.out.println(result2);
         return result2;
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Long call() throws Exception {
         return sum();
     }
 }
 
 
-class MyThread3 implements Callable<Integer>{
+class MyThread3 implements Callable<Long>{
     public void run() {
         sum();
     }
-    private Integer sum(){
-        int result3 = 0;
-        for (int i=5000000; i<7500000; i++){
-           // System.out.println(i);
-            result3 += i;
+    private long sum(){
+        long result3 = 0;
+        long z = 0;
+        for (long i=500_000_000; i<750_000_000; i++){
+            z = (long) Math.sqrt(i * i);
+            result3 += z;
         }
-        //System.out.println(result3);
         return result3;
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Long call() throws Exception {
         return sum();
     }
 }
 
 
-class MyThread4 implements Callable<Integer>{
-    private Integer sum(){
-        int result4 = 0;
-        for (int i=7500000; i<10000000; i++){
-            //System.out.println(i);
-            result4 += i;
+class MyThread4 implements Callable<Long> {
+    private long sum() {
+        long result4 = 0;
+        long z = 0;
+        for (long i = 750_000_000; i < 1_000_000_000; i++) {
+            z = (long) Math.sqrt(i * i);
+            result4 += z;
         }
-       // System.out.println(result4);
         return result4;
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Long call() throws Exception {
         return sum();
     }
 }
+
+class MyThread5 implements Callable<Long> {
+        private long sum() {
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+            long result4 = 12345;
+            System.out.println("Я ничего из 5 потока");
+            return result4;
+        }
+
+        @Override
+        public Long call() throws Exception {
+            return sum();
+        }
+    }
 
 
