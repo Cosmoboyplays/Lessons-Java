@@ -7,18 +7,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class Ex1 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // 1 ПОТОК
         MyThreadMain mtm = new MyThreadMain();
         long startTime = System.currentTimeMillis();
         mtm.run();
         long endTime = System.currentTimeMillis();
         String timemtm = "Время выполнения в одном потоке в миллисекундах: " + (endTime - startTime);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Thread.sleep(3000);
 
 
         // 4 ПОТОКА
@@ -55,9 +51,6 @@ public class Ex1 {
 // это 1 поток
 class MyThreadMain extends Thread{
     public void run() {
-        sum();
-    }
-    private void sum(){
         long result = 0;
         long z = 0;
         for (long i=1; i<1_000_000_000; i++){ // 115-125
@@ -67,12 +60,21 @@ class MyThreadMain extends Thread{
         }
         System.out.println("Результат одного потока "+result);
     }
+//    private void sum(){
+//        long result = 0;
+//        long z = 0;
+//        for (long i=1; i<1_000_000_000; i++){ // 115-125
+//            //System.out.println(i);
+//            z = (long) Math.sqrt(i * i);
+//            result += z;
+//        }
+//        System.out.println("Результат одного потока "+result);
+//    }
 }
 
 // 4 потока
-class
-MyThread1 implements Callable<Long> {
-    private long sum(){
+class MyThread1 implements Callable<Long> {
+    private Long sum(){
         long result1 = 0;
         long z = 0;
         for (long i=1; i<250_000_000; i++){
@@ -91,7 +93,7 @@ MyThread1 implements Callable<Long> {
 
 class MyThread2 implements Callable<Long>{
 
-    private long sum(){
+    private Long sum(){
         long result2 = 0;
         long z = 0;
         for (long i=250_000_000; i<500_000_000; i++){
